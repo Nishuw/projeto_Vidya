@@ -34,30 +34,114 @@ app/
 - Python 3.10 ou superior
 - MongoDB (local ou Docker)
 
-### 1. Clone o repositório
+### Opção 1: Execução com Docker (Recomendado)
+
+1. Clone o repositório:
 ```bash
 git clone https://github.com/Nishuw/projeto_Vidya.git
 cd projeto_Vidya
 ```
 
-### 2. Instale as dependências
+2. Execute com Docker Compose:
+```bash
+docker-compose up --build
+```
+
+A API estará disponível em: http://localhost:8000
+
+### Opção 2: Execução Local
+
+1. Clone o repositório:
+```bash
+git clone https://github.com/Nishuw/projeto_Vidya.git
+cd projeto_Vidya
+```
+
+2. Crie um ambiente virtual:
+```bash
+python -m venv venv
+venv\Scripts\activate  # Windows
+# ou
+source venv/bin/activate  # Linux/Mac
+```
+
+3. Instale as dependências:
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Configure as variáveis de ambiente
+4. Configure as variáveis de ambiente:
 ```bash
 cp .env.example .env
-# Edite o arquivo .env conforme necessário
+# Edite o arquivo .env se necessário
 ```
 
-### 4. Execute a aplicação
+5. Certifique-se de que o MongoDB está rodando localmente
+
+6. Execute a aplicação:
 ```bash
 uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-A API estará disponível em: http://localhost:8000
-Documentação interativa: http://localhost:8000/docs
+### Populando Dados de Teste
+
+Para facilitar os testes, execute o script de dados de exemplo:
+```bash
+python populate_sample_data.py
+```
+
+## Documentação da API
+
+- **Swagger UI**: http://localhost:8000/docs
+- **ReDoc**: http://localhost:8000/redoc
+
+## Endpoints Principais
+
+### Vendas (CRUD)
+- `POST /api/sales/` - Criar venda
+- `GET /api/sales/` - Listar vendas (com filtros)
+- `GET /api/sales/{id}` - Buscar venda específica
+- `PUT /api/sales/{id}` - Atualizar venda
+- `DELETE /api/sales/{id}` - Deletar venda
+
+### Textos de Vendas
+- `POST /api/sales/{id}/texts` - Adicionar texto/observação
+- `GET /api/sales/{id}/texts` - Buscar textos da venda
+
+### Analytics
+- `GET /api/analytics/sales-summary` - Relatório analítico
+
+### Busca Textual
+- `GET /api/search/texts?q={termo}` - Buscar em textos
+
+## Exemplos de Uso
+
+### Criar uma venda:
+```bash
+curl -X POST "http://localhost:8000/api/sales/" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "product_name": "iPhone 15",
+    "category": "Eletrônicos",
+    "quantity": 1,
+    "unit_price": 4999.99
+  }'
+```
+
+### Buscar vendas por categoria:
+```bash
+curl "http://localhost:8000/api/sales/?category=Eletrônicos"
+```
+
+### Obter analytics:
+```bash
+curl "http://localhost:8000/api/analytics/sales-summary"
+```
+
+### Buscar textos:
+```bash
+curl "http://localhost:8000/api/search/texts?q=cliente"
+```
 
 ## Status do Desenvolvimento
 

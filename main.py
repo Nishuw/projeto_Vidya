@@ -3,6 +3,11 @@ Aplicação principal FastAPI para sistema de vendas
 """
 from fastapi import FastAPI
 from app.core.config import settings
+from app.api import sales, analytics, search
+from app.db.init_db import create_tables
+
+# Inicializar banco de dados
+create_tables()
 
 # Criar instância da aplicação
 app = FastAPI(
@@ -13,6 +18,11 @@ app = FastAPI(
     redoc_url="/redoc"
 )
 
+# Registrar routers
+app.include_router(sales.router, prefix="/api")
+app.include_router(analytics.router, prefix="/api")
+app.include_router(search.router, prefix="/api")
+
 
 @app.get("/")
 async def root():
@@ -20,7 +30,12 @@ async def root():
     return {
         "message": "Bem-vindo à API de Vendas Vidya",
         "version": "1.0.0",
-        "docs": "/docs"
+        "docs": "/docs",
+        "endpoints": {
+            "vendas": "/api/sales",
+            "analytics": "/api/analytics", 
+            "busca": "/api/search"
+        }
     }
 
 
