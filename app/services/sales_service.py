@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import func, and_
 from app.models.sales import Sale
 from app.schemas.sales import SaleCreate, SaleUpdate
-from app.db.mongodb import get_sales_texts_collection
+from app.db.mongodb_smart import get_sales_texts_collection
 
 
 class SalesService:
