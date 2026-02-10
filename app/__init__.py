@@ -1,0 +1,1 @@
+# Iniciador da aplicação FastAPI
