@@ -148,8 +148,42 @@ curl "http://localhost:8000/api/search/texts?q=cliente"
 - [x] Estrutura inicial do projeto
 - [x] Configuração dos bancos de dados
 - [x] Modelos de dados
-- [ ] Endpoints CRUD de vendas
-- [ ] Endpoint analítico
-- [ ] Busca textual no MongoDB
-- [ ] Testes unitários
-- [ ] Documentação completa
+- [x] Endpoints CRUD de vendas
+- [x] Endpoint analítico
+- [x] Busca textual no MongoDB
+- [x] Testes básicos
+- [x] Documentação completa
+- [x] Dados de exemplo funcionando
+- [x] API executando corretamente
+
+## Executando Testes
+
+```bash
+# No ambiente virtual ativo
+pytest tests/ -v
+```
+
+## Estrutura dos Dados
+
+### Modelo de Venda (SQLite)
+```json
+{
+  "id": 1,
+  "product_name": "Smartphone Samsung Galaxy S23",
+  "category": "Eletrônicos",
+  "quantity": 2,
+  "unit_price": 2499.99,
+  "sale_date": "2026-02-05T10:28:38",
+  "total_price": 4999.98
+}
+```
+
+### Texto de Venda (MongoDB)
+```json
+{
+  "_id": "ObjectId",
+  "sale_id": 1,
+  "text": "Cliente elogiou a entrega rápida e a qualidade",
+  "created_at": "2026-02-10T10:28:38"
+}
+```
